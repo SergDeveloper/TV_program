@@ -6,16 +6,16 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 def parse_json():
-    json_data = open("/home/sergiy/python_projects/TV_program/data.json", "r")
-    data = json.load(json_data)
+    url = "https://api.ovva.tv/v2/ua/tvguide/1plus1"
+    response = requests.get(url)
+    json_data = response.text
+    data = json.loads(json_data)
     return data["data"]["programs"]
 
 
 def get_image(url):
-    try:
-        response = requests.get(url)
-    finally:
-        img = Image.open(BytesIO(response.content))
+    response = requests.get(url)
+    img = Image.open(BytesIO(response.content))
     return img
 
 
